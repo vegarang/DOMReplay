@@ -3,10 +3,11 @@ class DOMLoader
     util.debug 'running dom_loader initializations'
 
   initialize_click_elements_from_list: (elements, element_handler) ->
-    @util.debug 'initializing '+elements.length+' click-elements'
+    @util.debug "initializing #{elements.length} click-elements"
     for element in elements
       element.addEventListener 'click', () ->
-        element_handler element
+        element_handler this
+      , false
 
   initialize_buttons: () ->
     @util.debug 'initializing all buttons'

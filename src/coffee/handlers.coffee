@@ -15,3 +15,8 @@ class Handler
     @util.debug 'name: '+link.name
     @storage.add_click_event link
     return
+
+#  handle_click_event: (id) =>
+#    @util.debug "click event registered. Id: #{id}"
+#    @storage.add_click_event id
+#    return
