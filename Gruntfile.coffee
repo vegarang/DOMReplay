@@ -18,13 +18,14 @@ module.exports = (grunt) ->
       files: 'src/coffee/*.coffee'
       tasks:
         [
-          'coffee'
+          'coffee',
+          'uglify'
         ]
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
 
-  grunt.registerTask 'default', ['coffee', 'uglify']
+  grunt.registerTask 'default', ['coffee', 'uglify', 'watch']
 
   return
