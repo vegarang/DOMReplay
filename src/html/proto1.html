@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="main_html">
 <head lang="en">
     <meta charset="UTF-8">
     <title>DOMReplay proto1</title>
@@ -8,28 +8,35 @@
     <link href="../other/bootstrap/css/starter-template.css" rel="stylesheet">
     <script src="../js/DOMReplay.js" type="application/javascript"></script>
 </head>
-<body>
+<body id="body">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" id="navbar_list">
                     <li class="active"><a href="">Home</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
 
-    <div class="container">
-
-        <div class="starter-template" id="main_button_line">
-            <h1>DOMReplay prototype 1</h1>
-            <button class="btn btn-primary" id="btn1" name="button one">Click me! (and check console)</button>
-            <button class="btn btn-danger" id="btn2" name="button two">Ignore him! Click me instead!</button>
-            <a id="link1" name="just a link">Why not try a link?</a>
+    <div class="container-fluid" id="main_container">
+        <div class="row" id="main_row">
+            <div class="col-xs-10 col-xs-offset-1" id="main_col">
+                <h1 id="main_header">DOMReplay prototype 1</h1>
+                <button class="btn btn-primary" id="btn1" name="button one">Click me! (and check console)</button>
+                <button class="btn btn-danger" id="btn2" name="button two">Ignore him! Click me instead!</button>
+                <a id="link1" name="just a link">Why not try a link?</a>
+            </div>
         </div>
-
+        <div class="row" id="ignored_row">
+            <div class="col-xs-10 col-xs-offset-1" id="ignored_col">
+                <h2 id="ignored_header">Test of ignored elements</h2>
+                <button class="btn btn-primary" id="btn_ignored" name="ignored button" DomReplayIgnore>
+                    Click me all you want! I am ignored :)
+                </button>
+            </div>
+        </div>
     </div><!-- /.container -->
-
 
 </body>
 <script>
