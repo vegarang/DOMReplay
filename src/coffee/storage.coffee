@@ -14,6 +14,10 @@ class Storage
       @util.debug "cancelling storage due to @record_input being false"
       return
 
+    if element.hasAttribute "DomReplayIgnore"
+      @util.error 'Cannot track ignored element'
+      return
+
     if not element or not element.id
       @util.error 'Cannot add element to storage without valid id!'
       return
