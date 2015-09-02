@@ -5,7 +5,8 @@ class DomReplay
 
 
   initialize_tracking: () ->
-    @util.debug 'running initial load'
+    @util.debug 'running initial load!'
+
     time = setInterval( () =>
       @util.debug 'running readyState-check'
       if document.readyState != 'complete'
@@ -32,7 +33,7 @@ class DomReplay
     @replay = new Replay this
     @replay.play()
 
-setup_test_buttons = (domreplay_object) ->
+@setup_test_buttons = (domreplay_object) ->
   ###
   A simple function to add a couple of buttons after the initial loading of elements has occurred.
   This is to simulate elements created by other frameworks, such as AngularJS and jQuery.
@@ -87,5 +88,4 @@ setup_test_buttons = (domreplay_object) ->
 @DOMReplay_initial_load = (debugmode) ->
   dr = new DomReplay(debugmode)
   dr.initialize_tracking()
-  setup_test_buttons dr
   dr

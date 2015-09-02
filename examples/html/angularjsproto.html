@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html id="main_html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DOMReplay proto1</title>
+    <script src="../../src/js/DOMReplay.js" type="application/javascript"></script>
+
+    <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="../../bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+    <script src="../../bower_components/angular/angular.js" type="application/javascript"></script>
+    <script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.js" type="application/javascript"></script>
+    <script src="../js/exampleapp.js" type="application/javascript"></script>
+</head>
+<body id="body" ng-app="TestApp">
+    <div ng-controller="testCtrl" class="container">
+        <div class="col-sm-6">
+            <h3>Hello! Click the button below to show or hide some more stuffs!</h3>
+            <button class="btn btn-primary" ng-click="showblob1=!showblob1" id="blob1toggle">Click me!</button>
+        </div>
+        <div class="col-sm-6" ng-show="showblob1">
+            <button class="btn" id="blob1_btn1" ng-click='run_alert("button was clicked"); $event.stopPropagation()'>I am a button</button>
+            <button class="btn" id="blob1_btn2" ng-click='log_to_console("button was clicked")'>I am also a button</button>
+        </div>
+        <div class="col-sm-12">
+            <h3>And if you want to replay what just happened, click the button below</h3>
+            <button class="btn-primary" ng-click="trigger_replay(); $event.stopPropagation()">Click me!</button>
+        </div>
+    </div>
+</body>
+</html>
