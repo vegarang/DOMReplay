@@ -12,11 +12,28 @@ class Replay
 
   TODO: Add graphical clicks to the elements being clicked, and ensure that the element in question is in the users current view.
     ###
+
     @main.storage.record_input = false
-    for stored_element in @main.storage.data
+    delay = 500
+    current_step = 0
+
+    trigger_next_step = =>
+      if current_step >= @main.storage.data.length
+        @main.storage.record_input = true
+        return
+      @util.debug "storage.length (#{@main.storage.data.length}) >= current_step (#{current_step})"
+
+      window.setTimeout replay_step, delay
+
+    replay_step = =>
+      stored_element = @main.storage.data[current_step]
       @util.debug "replaying! Attempting to execute a #{stored_element.event_type} on #{stored_element.id}"
       element = document.getElementById stored_element.id
       event = new Event(stored_element.event_type)
       element.dispatchEvent(event)
+      current_step++
+      @util.debug "current_step is now #{current_step}"
 
-    @main.storage.record_input = true
+      trigger_next_step()
+    trigger_next_step()
+
