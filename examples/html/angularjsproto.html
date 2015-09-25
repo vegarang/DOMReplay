@@ -22,8 +22,12 @@
             <button class="btn" id="blob1_btn2" ng-click='log_to_console("button was clicked")'>I am also a button</button>
         </div>
         <div class="col-sm-12">
+            <h3>Click this button to start recording</h3>
+            <button class="btn-primary" ng-click="trigger_record()">Click me!</button>
+        </div>
+        <div class="col-sm-12">
             <h3>And if you want to replay what just happened, click the button below</h3>
-            <button class="btn-primary" ng-click="trigger_replay(); $event.stopPropagation()">Click me!</button>
+            <button class="btn-primary" ng-click="trigger_replay()">Click me!</button>
         </div>
     </div>
 </body>

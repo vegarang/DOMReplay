@@ -11,6 +11,9 @@ app.controller 'testCtrl', [
     $scope.run_alert = (msg) ->
       alert msg
 
+    $scope.trigger_record = ->
+      dr_object.initialize_tracking()
+
     $scope.trigger_replay = ->
       dr_object.initialize_playback()
 

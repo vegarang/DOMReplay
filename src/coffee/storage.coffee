@@ -3,15 +3,14 @@ class Storage
     @util = @main.util
     @data = []
     @is_initialized = true
-    @record_input = true
 
   add_click_event: (element) ->
     if not @is_initialized
       @util.error('attempting to add element before storage was initialized!')
       return
 
-    if not @record_input
-      @util.debug "cancelling storage due to @record_input being false"
+    if not @main.operating_state_is_recording()
+      @util.debug "cancelling storage due to current operating state not set to record"
       return
 
     if element.hasAttribute "DomReplayIgnore"

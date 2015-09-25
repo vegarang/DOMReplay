@@ -12,14 +12,17 @@ class Replay
 
   TODO: Add graphical clicks to the elements being clicked, and ensure that the element in question is in the users current view.
     ###
+    if @main.operating_state_is_replaying()
+      @util.debug 'replay initialization cancelled due to replay already running'
+      return
+    @main.set_operating_state_replay()
 
-    @main.storage.record_input = false
     delay = 500
     current_step = 0
 
     trigger_next_step = =>
       if current_step >= @main.storage.data.length
-        @main.storage.record_input = true
+        @main.set_operating_state_passive()
         return
       @util.debug "storage.length (#{@main.storage.data.length}) >= current_step (#{current_step})"
 

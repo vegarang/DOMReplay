@@ -1,10 +1,36 @@
 class DomReplay
   constructor: (debugmode) ->
-    console.log debugmode
+    console.log "debugmode is set to #{debugmode}"
     @util = new Util(debugmode)
 
+    @PASSIVE_STATE
+    @RECORD_STATE = 1
+    @REPLAY_STATE = 2
+    @current_operating_state = @PASSIVE_STATE
+
+
+  set_operating_state_replay: ->
+    @current_operating_state = @REPLAY_STATE
+
+  set_operating_state_record: ->
+    @current_operating_state = @RECORD_STATE
+
+  set_operating_state_passive: ->
+    @current_operating_state = @PASSIVE_STATE
+
+  operating_state_is_recording: ->
+    @current_operating_state == @RECORD_STATE
+
+  operating_state_is_replaying: ->
+    @current_operating_state == @REPLAY_STATE
+
+  operating_state_is_passive: ->
+    @current_operating_state == @PASSIVE_STATE
 
   initialize_tracking: () ->
+    if @operating_state_is_recording()
+      @util.debug "cancelling initialization of recording due to recording already being in progress."
+      return
     @util.debug 'running initial load!'
 
     time = setInterval( () =>
@@ -28,6 +54,7 @@ class DomReplay
 
     @dom_loader.initialize_mutation_observer()
     @util.debug "all modules initialized"
+    @set_operating_state_record()
 
   initialize_playback: ->
     @replay = new Replay this
@@ -87,5 +114,4 @@ class DomReplay
 
 @DOMReplay_initial_load = (debugmode) ->
   dr = new DomReplay(debugmode)
-  dr.initialize_tracking()
   dr
