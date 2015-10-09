@@ -1,6 +1,13 @@
 class Replay
   constructor: (@main) ->
     @util = @main.util
+    @STATE_STOPPED = 0
+    @STATE_PLAY = 1
+
+    @current_step = 0
+    @default_delay = 500
+
+    @current_state = @STATE_STOPPED
 
   play: ->
     ###
@@ -17,26 +24,49 @@ class Replay
       return
     @main.set_operating_state_replay()
 
-    delay = 500
-    current_step = 0
-
-    trigger_next_step = =>
-      if current_step >= @main.storage.data.length
+    trigger_next_step = (delay=@default_delay) =>
+      @util.debug "attempting to trigger next step"
+      if @current_step >= @main.storage.data.length
         @main.set_operating_state_passive()
         return
-      @util.debug "storage.length (#{@main.storage.data.length}) >= current_step (#{current_step})"
+      @util.debug "storage.length (#{@main.storage.data.length}) >= current_step (#{@current_step})"
 
-      window.setTimeout replay_step, delay
+      window.setTimeout play_step, delay
 
-    replay_step = =>
-      stored_element = @main.storage.data[current_step]
+    play_step = =>
+      if @current_state != @STATE_PLAY
+        return
+
+      stored_element = @main.storage.data[@current_step]
       @util.debug "replaying! Attempting to execute a #{stored_element.event_type} on #{stored_element.id}"
       element = document.getElementById stored_element.id
       event = new Event(stored_element.event_type)
       element.dispatchEvent(event)
-      current_step++
-      @util.debug "current_step is now #{current_step}"
 
-      trigger_next_step()
+      if stored_element.value != undefined
+        element.value = stored_element.value
+
+      @current_step++
+      @util.debug "current_step is now #{@current_step}"
+
+      if @main.config[stored_element.event_type].delay != undefined
+        trigger_next_step(@main.config[stored_element.event_type].delay)
+      else
+        trigger_next_step()
+
+    @util.debug "setting current state to play, and running next step!"
+    @current_state = @STATE_PLAY
     trigger_next_step()
+
+  pause: ->
+    @util.debug "pausing.."
+    @main.set_operating_state_passive()
+    @current_state = @STATE_STOPPED
+
+  reset: ->
+    @util.debug "stopping playback and resetting counter!"
+    @main.set_operating_state_passive()
+    @current_state = @STATE_STOPPED
+    @current_step = 0
+
 

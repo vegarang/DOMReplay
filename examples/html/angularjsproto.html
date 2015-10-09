@@ -12,22 +12,45 @@
     <script src="../js/exampleapp.js" type="application/javascript"></script>
 </head>
 <body id="body" ng-app="TestApp">
-    <div ng-controller="testCtrl" class="container">
-        <div class="col-sm-6">
+    <div ng-controller="testCtrl" class="container" id="main_container">
+        <div class="col-sm-12">
             <h3>Hello! Click the button below to show or hide some more stuffs!</h3>
             <button class="btn btn-primary" ng-click="showblob1=!showblob1" id="blob1toggle">Click me!</button>
         </div>
-        <div class="col-sm-6" ng-show="showblob1">
+        <div class="col-sm-12" ng-show="showblob1">
+            <h4>Here are a few buttons shown/hidden by javascript</h4>
             <button class="btn" id="blob1_btn1" ng-click='run_alert("button was clicked"); $event.stopPropagation()'>I am a button</button>
             <button class="btn" id="blob1_btn2" ng-click='log_to_console("button was clicked")'>I am also a button</button>
         </div>
         <div class="col-sm-12">
-            <h3>Click this button to start recording</h3>
-            <button class="btn-primary" ng-click="trigger_record()">Click me!</button>
+            <h3>Optionally, click me to show a full form of some sort..</h3>
+            <button class="btn btn-primary" ng-click="showblob2=!showblob2" id="blob2toggle">Click me!</button>
+        </div>
+        <div class="col-sm-12" ng-show="showblob2">
+            <div class="form-group">
+                <label for="blob2_input1">Here is a text-input:</label>
+                <input type="text" id="blob2_input1" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="blob2_input2">And here is a textarea:</label>
+                <textarea id="blob2_input2" class="form-control"></textarea>
+            </div>
         </div>
         <div class="col-sm-12">
-            <h3>And if you want to replay what just happened, click the button below</h3>
-            <button class="btn-primary" ng-click="trigger_replay()">Click me!</button>
+            <h3>Record controls:</h3>
+            <button class="btn btn-danger" ng-click="trigger_record()">Start</button>
+            <button class="btn btn-default" ng-click="stop_record()">Stop</button>
+        </div>
+        <div class="col-sm-12">
+            <h3>Playback controls:</h3>
+            <button class="btn btn-success" ng-click="start_replay()">Start</button>
+            <button class="btn btn-warning" ng-click="pause_replay()">Pause</button>
+            <button class="btn btn-danger" ng-click="stop_replay()">Stop</button>
+        </div>
+
+        <div class="col-sm-12">
+            <h3>Click this button to generate some more elements!</h3>
+            <button class="btn btn-warning" ng-click="add_elements()" id="generate_elements">Click me!</button>
         </div>
     </div>
 </body>

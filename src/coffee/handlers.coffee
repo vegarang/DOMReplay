@@ -3,16 +3,13 @@ class Handler
     @util = @main.util
     @util.debug "initializing DOM handlers"
 
-  handle_button_click: (button) =>
-    @util.debug 'button was clicked!'
-    @util.debug 'id: '+button.id
-    @util.debug 'name: '+button.name
-    @main.storage.add_click_event button
-    return
+  handle_click_event: (element) =>
+    @util.debug "id: #{element.id}, name: #{element.name} was clicked"
+    @main.storage.add_click_event element
 
-  handle_link_click: (link) =>
-    @util.debug 'link was clicked!'
-    @util.debug 'id: '+link.id
-    @util.debug 'name: '+link.name
-    @main.storage.add_click_event link
-    return
+  handle_change_event: (element) =>
+    @util.debug "id: #{element.id}, name: #{element.name} was changed"
+    @main.storage.add_change_event element
+
+  handle_input_event: (element) =>
+    @main.storage.add_input_event element

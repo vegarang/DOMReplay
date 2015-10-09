@@ -3,32 +3,27 @@ class DOMLoader
     @util = @main.util
     @util.debug 'running dom_loader initializations'
 
-  add_click_listener_to_element: (element, element_handler) ->
-    element.addEventListener 'click', () ->
-      element_handler this
+  add_eventlistener_to_element: (element, handler, event) ->
+    element.addEventListener event, () ->
+      handler this
     , false
 
-  initialize_click_elements_from_list: (elements, element_handler) ->
-    @util.debug "initializing #{elements.length} click-elements"
-    @add_click_listener_to_element element, element_handler for element in elements
 
-  initialize_buttons: () ->
-    @util.debug 'initializing all buttons'
-    @initialize_click_elements_from_list document.getElementsByTagName('button'), @main.handler.handle_button_click
-
-  initialize_links: () ->
-    @util.debug 'initializing all links'
-    @initialize_click_elements_from_list document.getElementsByTagName('a'), @main.handler.handle_link_click
+  initialize_events: () ->
+    for event, conf of @main.config
+      for tagname in conf.tagnames
+        elements = document.getElementsByTagName tagname
+        @add_eventlistener_to_element element, conf.handler, event for element in elements
+    return
 
 
   initialize_mutation_observer: () =>
     analyze_element = (element) =>
       @util.debug "analyzing element '#{element.id}', '#{element.tagName}'"
-      if element.tagName is "BUTTON"
-        @add_click_listener_to_element element, @main.handler.handle_button_click
-
-      else if element.tagName is "A"
-        @add_click_listener_to_element element, @main.handler.handle_link_click
+      for event, conf of @main.config
+        if element.tagName.toLowerCase() in conf.tagnames
+          @util.debug "mutationobserver is adding a #{event}-listener to element #{element.id}"
+          @add_eventlistener_to_element element, conf.handler, event
 
     @util.debug 'initializing mutation_observer'
     observer = new MutationObserver (mutations) =>
