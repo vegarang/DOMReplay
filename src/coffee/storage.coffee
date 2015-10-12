@@ -36,6 +36,8 @@ class Storage
 
     @data.push object
 
+    # Uncomment this line to see full datastructure of storage on save..
+    # @util.debug_literal JSON.stringify @data
     return
 
   add_click_event: (element) ->

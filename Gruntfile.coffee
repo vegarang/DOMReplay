@@ -24,6 +24,17 @@ module.exports = (grunt) ->
             [
               'examples/coffee/*.coffee'
             ]
+      devserver:
+        files:
+          'devserver/js/devserver.js':
+            [
+              'devserver/coffee/*.coffee'
+            ]
+    express:
+      options: {}
+      dev:
+        options:
+          script: 'devserver/js/devserver.js'
     watch:
       project:
         files: 'src/coffee/*.coffee'
@@ -38,15 +49,26 @@ module.exports = (grunt) ->
           [
             'coffee:examples'
           ]
+      devserver:
+        files: 'devserver/coffee/*.coffee'
+        tasks:
+          [
+            'coffee:devserver',
+            'express:dev'
+          ]
+        options:
+          spawn: false
 
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-express-server'
 
   grunt.registerTask 'default', ['coffee:project', 'uglify:project']
   grunt.registerTask 'dev-project', ['coffee:project', 'uglify:project', 'watch:project']
   grunt.registerTask 'dev-examples', ['coffee:examples', 'watch:examples']
-  grunt.registerTask 'dev-full', ['coffee', 'uglify', 'watch']
+  grunt.registerTask 'dev-server', ['coffee:devserver', 'watch:devserver']
+  grunt.registerTask 'dev-full', ['coffee', 'uglify', 'express:dev', 'watch']
 
   return
