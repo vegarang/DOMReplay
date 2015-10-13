@@ -15,6 +15,7 @@
     "grunt-contrib-watch": "~0.6.1",
     "grunt-express-server": "^0.5.1",
     "mongodb": "^2.0.45",
-    "mongoose": "^4.1.10"
+    "mongoose": "^4.0.8",
+    "mongoose-auto-increment": "^4.0.0"
   }
 }
