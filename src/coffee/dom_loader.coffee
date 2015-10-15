@@ -10,7 +10,7 @@ class DOMLoader
 
 
   initialize_events: () ->
-    for event, conf of @main.config
+    for event, conf of @main.config.events
       for tagname in conf.tagnames
         elements = document.getElementsByTagName tagname
         @add_eventlistener_to_element element, conf.handler, event for element in elements
@@ -20,7 +20,7 @@ class DOMLoader
   initialize_mutation_observer: () =>
     analyze_element = (element) =>
       @util.debug "analyzing element '#{element.id}', '#{element.tagName}'"
-      for event, conf of @main.config
+      for event, conf of @main.config.events
         if element.tagName.toLowerCase() in conf.tagnames
           @util.debug "mutationobserver is adding a #{event}-listener to element #{element.id}"
           @add_eventlistener_to_element element, conf.handler, event

@@ -1,7 +1,11 @@
 class DomReplay
-  constructor: (debugmode, config=null) ->
-    console.log "debugmode is set to #{debugmode}"
-    @util = new Util(debugmode)
+  constructor: (config_object={}) ->
+    @config = config_object
+    if not @config.debugmode
+      @config['debugmode'] = false
+
+    console.log "debugmode is set to #{@config.debugmode}"
+    @util = new Util(@config.debugmode)
 
     @PASSIVE_STATE = 0
     @RECORD_STATE = 1
@@ -13,15 +17,17 @@ class DomReplay
     @dom_loader = new DOMLoader this
     @replay = new Replay this
 
-    if config == null
-      @config =
-        click:
-          tagnames: ['a', 'button']
-          handler: @handler.handle_click_event
-        input:
-          tagnames: ['input', 'select', 'textarea']
-          handler: @handler.handle_input_event
-          delay: 100
+    if not @config.events
+        @config['events'] =
+          click:
+            tagnames: ['a', 'button']
+            handler: @handler.add_click_event
+          input:
+            tagnames: ['input', 'select', 'textarea']
+            handler: @handler.add_input_event
+            delay: 100
+    if @config.server
+      @serverstorage = new ServerStorage this
 
   set_operating_state_replay: ->
     @current_operating_state = @REPLAY_STATE
@@ -30,6 +36,8 @@ class DomReplay
     @current_operating_state = @RECORD_STATE
 
   set_operating_state_passive: ->
+    if @current_operating_state is @RECORD_STATE
+      @util.debug "Stopped recording, should store to server now!"
     @current_operating_state = @PASSIVE_STATE
 
   operating_state_is_recording: ->
@@ -103,6 +111,6 @@ class DomReplay
   div.appendChild test_input_area
   return
 
-@DOMReplay_initial_load = (debugmode) ->
-  dr = new DomReplay(debugmode)
+@DOMReplay_initial_load = (config_object={}) ->
+  dr = new DomReplay(config_object)
   dr

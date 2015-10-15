@@ -49,8 +49,8 @@ class Replay
       @current_step++
       @util.debug "current_step is now #{@current_step}"
 
-      if @main.config[stored_element.event_type].delay != undefined
-        trigger_next_step(@main.config[stored_element.event_type].delay)
+      if @main.config.events[stored_element.event_type].delay != undefined
+        trigger_next_step(@main.config.events[stored_element.event_type].delay)
       else
         trigger_next_step()
 

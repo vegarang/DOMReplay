@@ -1,6 +1,7 @@
 app = angular.module 'TestApp', []
 
-dr_object = DOMReplay_initial_load true
+dr_object = DOMReplay_initial_load
+  debugmode: true
 
 app.controller 'testCtrl', [
   '$scope',

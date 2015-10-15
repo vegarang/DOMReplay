@@ -23,7 +23,8 @@ class Storage
 
     return true
 
-  add_event: (element, event, add_value=false) ->
+  add_event: (element, event, add_value=false) =>
+    @util.debug "adding event to storage"
     if not @_ok_to_store_event element
       return
 
@@ -40,11 +41,3 @@ class Storage
     # @util.debug_literal JSON.stringify @data
     return
 
-  add_click_event: (element) ->
-    @add_event element, 'click', false
-
-  add_change_event: (element) ->
-    @add_event element, 'change', true
-
-  add_input_event: (element) ->
-    @add_event element, 'input', true
