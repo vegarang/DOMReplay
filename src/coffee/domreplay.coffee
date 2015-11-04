@@ -77,6 +77,21 @@ class DomReplay
   get_playback_object: ->
     return @replay
 
+  push_to_server: ->
+    if not @config.server
+      @util.error "Cannot push to server without server configuration!"
+
+    @serverstorage.push_to_server()
+
+  load_from_server: ->
+    if not @config.server
+      @util.error "Cannot load from server without server configuration!"
+
+    @serverstorage.load_from_server()
+
+  reset_storage: ->
+    @storage.reset()
+
 @setup_test_buttons = (domreplay_object, parent_id, index) ->
   ###
   A simple function to add a couple of buttons after the initial loading of elements has occurred.

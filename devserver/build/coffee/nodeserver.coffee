@@ -9,6 +9,21 @@ bodyParser = require "body-parser"
 app = express()
 app.use bodyParser.json()
 
+tmp = __dirname.split "/"
+tmp.pop()
+tmp.pop()
+public_dir = "#{tmp.join '/'}/public"
+tmp.pop()
+project_dir = "#{tmp.join '/'}/build"
+bower_dir = "#{tmp.join '/'}/bower_components"
+src_dir = "#{tmp.join '/'}/src/js"
+
+app.use '/public', express.static public_dir
+app.use '/project', express.static project_dir
+app.use '/bower', express.static bower_dir
+app.use '/src', express.static src_dir
+
+
 PORT = 3000
 
 
@@ -56,7 +71,13 @@ createBlob = (res, values) ->
     returnBlob "created", res, blob
 
 updateBlob = (res, values) ->
-  Blob.findOneAndUpdate values, 'user_id _id data', (err, blob) ->
+  query =
+    _id: values._id
+  update =
+    data: values.data
+    user_id: values.user_id
+
+  Blob.findOneAndUpdate query, update, {new: true}, (err, blob) ->
     if err
       return handleError err, res
     returnBlob "updated", res, blob
@@ -65,7 +86,10 @@ updateBlob = (res, values) ->
 ################
 # Http functions
 ################
-app.get '/', (req, res) ->
+app.get '/api', (req, res) ->
+  res.header "Access-Control-Allow-Origin", "*"
+  res.header "Access-Control-Allow-Headers", "X-Requested-With"
+
   if not req.query.session_id
     res.json
       status: "error"
@@ -84,7 +108,10 @@ app.get '/', (req, res) ->
     returnBlob "success", res, blob
 
 
-app.post '/', (req, res) ->
+app.post '/api', (req, res) ->
+  res.header "Access-Control-Allow-Origin", "*"
+  res.header "Access-Control-Allow-Headers", "X-Requested-With"
+
   blob_values =
     data: req.body.data
 

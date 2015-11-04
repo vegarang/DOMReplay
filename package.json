@@ -4,7 +4,8 @@
   "description": "Record and replay changes made to the HTML DOM by the user",
   "author": "Vegard Angell",
   "license": "MIT",
-  "devDependencies": {
+  "main": "devserver/build/js/devserver.js",
+  "dependencies": {
     "body-parser": "^1.14.1",
     "express": "~4.13.3",
     "grunt": "~0.4.5",

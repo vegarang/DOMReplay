@@ -3,16 +3,25 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>DOMReplay proto1</title>
-    <script src="../../src/js/DOMReplay.js" type="application/javascript"></script>
+    <script src="/src/DOMReplay.js" type="application/javascript"></script>
 
-    <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="../../bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
-    <script src="../../bower_components/angular/angular.js" type="application/javascript"></script>
-    <script src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.js" type="application/javascript"></script>
-    <script src="../js/exampleapp.js" type="application/javascript"></script>
+    <link href="/bower/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/bower/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+    <script src="/bower/angular/angular.js" type="application/javascript"></script>
+    <script src="/bower/angular-bootstrap/ui-bootstrap-tpls.js" type="application/javascript"></script>
+    <script src="/public/js/exampleapp.js" type="application/javascript"></script>
 </head>
 <body id="body" ng-app="TestApp">
     <div ng-controller="testCtrl" class="container" id="main_container">
+        <div class="col-sm-12">
+            <h3>Some server-stuff:</h3>
+            <button DomReplayIgnore class="btn btn-primary" ng-click="load_from_server()">Load from server</button>
+            <button DomReplayIgnore class="btn btn-primary" ng-click="push_to_server()">Push to server</button>
+        </div>
+        <div class="col-sm-12">
+            <h3>Danger zone</h3>
+            <button class="btn btn-danger" ng-click="reset()">Reset storage!</button>
+        </div>
         <div class="col-sm-12">
             <h3>Hello! Click the button below to show or hide some more stuffs!</h3>
             <button class="btn btn-primary" ng-click="showblob1=!showblob1" id="blob1toggle">Click me!</button>

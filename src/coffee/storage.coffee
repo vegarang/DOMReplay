@@ -4,6 +4,9 @@ class Storage
     @data = []
     @is_initialized = true
 
+  reset: ->
+    @data = []
+
   _ok_to_store_event: (element) ->
     if not @is_initialized
       @util.error('attempting to add element before storage was initialized!')
@@ -40,4 +43,10 @@ class Storage
     # Uncomment this line to see full datastructure of storage on save..
     # @util.debug_literal JSON.stringify @data
     return
+
+  update_storage: (new_data) =>
+    @util.debug "updating storage.data."
+    @util.debug "new data:"
+    @util.debug_literal new_data
+    @data = new_data
 

@@ -2,6 +2,10 @@ app = angular.module 'TestApp', []
 
 dr_object = DOMReplay_initial_load
   debugmode: true
+  server:
+    session_id: "561d14e2585bbfce0ef888fb"
+    user_id: 42
+    url: "http://localhost:3000/api"
 
 app.controller 'testCtrl', [
   '$scope',
@@ -37,4 +41,13 @@ app.controller 'testCtrl', [
 
     $scope.log_to_console = (msg) ->
       console.log msg
+
+    $scope.push_to_server = ->
+      dr_object.push_to_server()
+
+    $scope.load_from_server = ->
+      dr_object.load_from_server()
+
+    $scope.reset = ->
+      dr_object.reset_storage()
   ]

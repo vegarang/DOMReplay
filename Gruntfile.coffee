@@ -7,8 +7,8 @@ module.exports = (grunt) ->
           src: 'src/js/<%= pkg.name %>.js'
           dest: 'build/<%= pkg.name %>.min.js'
         examples:
-          src: 'examples/js/exampleapp.js'
-          dest: 'examples/build/exampleapp.min.js'
+          src: 'devserver/public/js/exampleapp.js'
+          dest: 'devserver/public/build/exampleapp.min.js'
     coffee:
       options:
         join: true
@@ -18,23 +18,23 @@ module.exports = (grunt) ->
             [
               'src/coffee/*.coffee'
             ]
-      examples:
+      public:
         files:
-          'examples/js/exampleapp.js':
+          'devserver/public/js/exampleapp.js':
             [
-              'examples/coffee/*.coffee'
+              'devserver/public/coffee/*.coffee'
             ]
       devserver:
         files:
-          'devserver/js/devserver.js':
+          'devserver/build/js/devserver.js':
             [
-              'devserver/coffee/*.coffee'
+              'devserver/build/coffee/*.coffee'
             ]
     express:
       options: {}
       dev:
         options:
-          script: 'devserver/js/devserver.js'
+          script: 'devserver/build/js/devserver.js'
     watch:
       project:
         files: 'src/coffee/*.coffee'
@@ -44,13 +44,13 @@ module.exports = (grunt) ->
             'uglify:project'
           ]
       examples:
-        files: 'examples/coffee/*.coffee'
+        files: 'devserver/public/coffee/*.coffee'
         tasks:
           [
-            'coffee:examples'
+            'coffee:public'
           ]
       devserver:
-        files: 'devserver/coffee/*.coffee'
+        files: 'devserver/build/coffee/*.coffee'
         tasks:
           [
             'coffee:devserver',
@@ -67,7 +67,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default', ['coffee:project', 'uglify:project']
   grunt.registerTask 'dev-project', ['coffee:project', 'uglify:project', 'watch:project']
-  grunt.registerTask 'dev-examples', ['coffee:examples', 'watch:examples']
+  grunt.registerTask 'dev-public', ['coffee:public', 'watch:public']
   grunt.registerTask 'dev-server', ['coffee:devserver', 'watch:devserver']
   grunt.registerTask 'dev-full', ['coffee', 'uglify', 'express:dev', 'watch']
 
