@@ -36,4 +36,3 @@ gulp.task('lint:fix', () => {
     .pipe(gulp.dest('src/es6/'))
     .pipe(eslint.format());
 });
-
